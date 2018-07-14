@@ -33,7 +33,7 @@ concept Funding {
   o Double approvedFunding
   o Double totalFundsReceived
   o Double fundsPerInstallment
-  --> GovOrg govOrgId
+  -->GlobalCitizen citizenId
 }
 
 asset ProjectPledge identified by pledgeId {
@@ -43,16 +43,16 @@ asset ProjectPledge identified by pledgeId {
   o Double fundsRequired
   o Status status
   --> AidOrg aidOrg
+  --> GovOrg govOrgId
   o Funding[] funds
 }
 
 abstract participant User {
-  --> ProjectPledge[] projectPledge
+  o String not_reqd
 }
 
 participant GovOrg identified by govOrgId extends User {
   o String govOrgId
-  --> ProjectPledge[] fundedPledges
 }
 
 participant AidOrg identified by aidOrgId extends User {
@@ -69,6 +69,7 @@ transaction CreateProjectPledge {
   o String decription
   o Double fundsRequired
   --> AidOrg aidOrg
+  --> GovOrg govOrgId
 }
 
 transaction SendPledgeToGlobalCitizen {
